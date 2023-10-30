@@ -1,0 +1,1570 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.chart.AreaChart?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.StackedAreaChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<?import java.lang.String?>
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Accu.Controller">
+   <children>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="695.0" prefWidth="915.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <MenuBar>
+              <menus>
+                <Menu fx:id="menuImport" mnemonicParsing="false" text="File">
+                  <items>
+                        <MenuItem fx:id="menuItemOpenAny" mnemonicParsing="false" onAction="#clickMenuItemOpenAny" text="Open" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                      <MenuItem fx:id="menuItemFinder" mnemonicParsing="false" onAction="#clickMenuItemFinder" text="Finder" />
+                  </items>
+                </Menu>
+                  <Menu fx:id="menuNewSeries" mnemonicParsing="false" text="New Series">
+                    <items>
+                        <MenuItem fx:id="menuItemNewSeries" mnemonicParsing="false" onAction="#clickMenuItemNewSeries" text="New Aircraft" />
+                        <MenuItem fx:id="menuItemImportAircraft" mnemonicParsing="false" onAction="#clickMenuItemImportAircraft" text="File Aircraft" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Generate Report">
+                     <items>
+                        <MenuItem fx:id="menuItemSavePDF" mnemonicParsing="false" onAction="#clickMenuItemGenerateReport" text="Generate Report" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <CheckMenuItem fx:id="checkMenuItemReportString" mnemonicParsing="false" selected="true" text="String Analysis" />
+                        <CheckMenuItem fx:id="checkMenuItemReportCards" mnemonicParsing="false" selected="true" text="Card Analysis" />
+                     </items>
+                  </Menu>
+                <Menu fx:id="menuSettings" mnemonicParsing="false" onMenuValidation="#initialValidateScannersList" text="Settings">
+                  <items>
+                        <MenuItem fx:id="menuItemSettings" mnemonicParsing="false" onAction="#clickMenuItemSettings" text="Settings" />
+                        <Menu fx:id="menuSerialPort" mnemonicParsing="false" text="String Drive">
+                           <graphic>
+                              <Button contentDisplay="RIGHT" graphicTextGap="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#clickMenuItemSerialPortListRefresh" prefHeight="20.0" prefWidth="20.0">
+                                 <graphic>
+                                    <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" scaleX="0.75" scaleY="0.75">
+                                       <image>
+                                          <Image url="@Resources/SmallReloadIcon.gif" />
+                                       </image>
+                                       <viewport>
+                                          <Rectangle2D height="18.0" width="18.0" />
+                                       </viewport>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </graphic>
+                        </Menu>
+                        <Menu fx:id="menuScanners" mnemonicParsing="false" text="Scanner">
+                           <graphic>
+                              <Button contentDisplay="RIGHT" graphicTextGap="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#refreshScannersList" prefHeight="20.0" prefWidth="20.0">
+                                 <graphic>
+                                    <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" scaleX="0.75" scaleY="0.75">
+                                       <image>
+                                          <Image url="@Resources/SmallReloadIcon.gif" />
+                                       </image>
+                                       <viewport>
+                                          <Rectangle2D height="18.0" width="18.0" />
+                                       </viewport>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </graphic>
+                        </Menu>
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Resources">
+                  <items>
+                    <MenuItem fx:id="menuItemUserManual" mnemonicParsing="false" onAction="#clickMenuItemUserManual" text="User Manual" />
+                        <MenuItem fx:id="menuItemCalibrationCalc" mnemonicParsing="false" onAction="#clickMenuItemCalibrationCalc" text="Calibration Calculator" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="menuItemAbout" mnemonicParsing="false" onAction="#clickMenuItemAbout" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </top>
+         <left>
+            <ScrollPane fx:id="scrollPaneMain" minWidth="50.0" pannable="true" prefViewportHeight="800.0" prefViewportWidth="340.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="TOP_LEFT">
+               <content>
+                  <VBox spacing="6.0">
+                     <children>
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER" fillHeight="false">
+                           <children>
+                              <Label text="Applicator">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label text="Pilot:" HBox.hgrow="ALWAYS" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="textFieldPilot" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label text="Business Name: " />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="textFieldBusinessName" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label text="Street: " />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="textFieldStreet" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label text="City: " />
+                              <TextField fx:id="textFieldCity" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label text="State: " />
+                              <TextField fx:id="textFieldState" prefWidth="55.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label text="ZIP: " />
+                              <TextField fx:id="textFieldZIP" maxWidth="-Infinity" prefWidth="60.0" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label text="Phone: " />
+                              <TextField fx:id="textFieldPhone" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label text="Email: " />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="textFieldEmail" prefWidth="250.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" />
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER" VBox.vgrow="SOMETIMES">
+                           <children>
+                              <Label text="Aircraft">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label text="Reg. #:" translateY="3.0" />
+                              <Region maxWidth="-Infinity" minWidth="-Infinity" prefWidth="10.0" HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="textFieldRegNum" prefWidth="100.0" promptText="(e.g. N802AA)" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label text="Series:" translateY="3.0" />
+                              <Region maxWidth="-Infinity" minWidth="-Infinity" prefWidth="10.0" HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="textFieldSeriesNum" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="40.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label text="Make: " />
+                              <ComboBox fx:id="comboBoxAircraftMake" editable="true" onAction="#changeAircraftMake" prefWidth="100.0" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label text="Model: " />
+                              <ComboBox fx:id="comboBoxAircraftModel" editable="true" prefWidth="100.0" />
+                           </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Label text="Nozzle Set #1">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label text="Type: " />
+                              <ComboBox fx:id="comboBoxNozzle1Type" editable="true" onAction="#changeNozzle1Type" prefWidth="150.0" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label text="Quant: " />
+                              <TextField fx:id="textFieldNozzle1Quant" prefWidth="50.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label text="Size: " />
+                              <ComboBox fx:id="comboBoxNozzle1Size" editable="true" prefWidth="100.0" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label text="Def: " />
+                              <ComboBox fx:id="comboBoxNozzle1Def" editable="true" prefWidth="75.0" />
+                           </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Label text="Nozzle Set #2">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label text="Type: " />
+                              <ComboBox fx:id="comboBoxNozzle2Type" editable="true" onAction="#changeNozzle2Type" prefWidth="150.0" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label text="Quant: " />
+                              <TextField fx:id="textFieldNozzle2Quant" prefWidth="50.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label text="Size: " />
+                              <ComboBox fx:id="comboBoxNozzle2Size" editable="true" prefWidth="100.0" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label text="Def: " />
+                              <ComboBox fx:id="comboBoxNozzle2Def" editable="true" prefWidth="75.0" />
+                           </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Label text="Outputs">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label fx:id="labelBoomPress" text="Boom Pressure (PSI): " />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="textFieldBoomPressure" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label fx:id="labelTargetRate" text="Target Rate (GPA): " />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="textFieldTargetRate" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label fx:id="labelTargetSwath" text="Target Swath (FT): " />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="textFieldTargetSwath" />
+                           </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Label text="Series Data">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
+                        <HBox VBox.vgrow="ALWAYS">
+                           <children>
+                              <VBox prefWidth="155.0" spacing="12.5">
+                                 <children>
+                                    <Label fx:id="labelGroundSpeed" text="Ground Speed (MPH):" VBox.vgrow="ALWAYS" />
+                                    <Label fx:id="labelSprayHeight" text="Spray Height (FT):" VBox.vgrow="ALWAYS" />
+                                    <Label text="Pass Heading (Deg):" VBox.vgrow="ALWAYS" />
+                                    <Label text="Wind Direction (Deg):" VBox.vgrow="ALWAYS" />
+                                    <Label fx:id="labelWindVel" text="Wind Velocity (MPH):" VBox.vgrow="ALWAYS" />
+                                    <Label fx:id="labelTemp" text="Ambient Temp (Deg F):" VBox.vgrow="ALWAYS" />
+                                    <Label text="Rel Humidity (%):" VBox.vgrow="ALWAYS" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="8.0" top="34.0" />
+                                 </padding>
+                              </VBox>
+                              <ScrollPane fitToHeight="true" prefViewportWidth="165.0" vbarPolicy="NEVER">
+                                 <content>
+                                    <GridPane hgap="4.0" vgap="4.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                                          <ColumnConstraints maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                                          <ColumnConstraints maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                                          <ColumnConstraints maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                                          <ColumnConstraints maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                                          <ColumnConstraints maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints />
+                                          <RowConstraints />
+                                          <RowConstraints />
+                                          <RowConstraints />
+                                          <RowConstraints />
+                                      </rowConstraints>
+                                       <children>
+                                          <CheckBox fx:id="cBPass1" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#updateActivePasses" selected="true" text="Pass 1">
+                                             <font>
+                                                <Font size="10.0" />
+                                             </font>
+                                          </CheckBox>
+                                          <CheckBox fx:id="cBPass2" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#updateActivePasses" selected="true" text="Pass 2" GridPane.columnIndex="1">
+                                             <font>
+                                                <Font size="10.0" />
+                                             </font>
+                                          </CheckBox>
+                                          <CheckBox fx:id="cBPass3" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#updateActivePasses" selected="true" text="Pass 3" GridPane.columnIndex="2">
+                                             <font>
+                                                <Font size="10.0" />
+                                             </font>
+                                          </CheckBox>
+                                          <CheckBox fx:id="cBPass4" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#updateActivePasses" text="Pass 4" GridPane.columnIndex="3" GridPane.halignment="CENTER">
+                                             <font>
+                                                <Font size="10.0" />
+                                             </font>
+                                          </CheckBox>
+                                          <CheckBox fx:id="cBPass5" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#updateActivePasses" text="Pass 5" GridPane.columnIndex="4">
+                                             <font>
+                                                <Font size="10.0" />
+                                             </font>
+                                          </CheckBox>
+                                          <CheckBox fx:id="cBPass6" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#updateActivePasses" text="Pass 6" GridPane.columnIndex="5">
+                                             <font>
+                                                <Font size="10.0" />
+                                             </font>
+                                          </CheckBox>
+                                          <TextField fx:id="textFieldGS1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="textFieldGS2" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="textFieldGS3" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <TextField fx:id="textFieldGS4" disable="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                          <TextField fx:id="textFieldGS5" disable="true" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                          <TextField fx:id="textFieldGS6" disable="true" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                                          <TextField fx:id="textFieldSH1" GridPane.rowIndex="2" />
+                                          <TextField fx:id="textFieldSH2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <TextField fx:id="textFieldSH3" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                          <TextField fx:id="textFieldSH4" disable="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                          <TextField fx:id="textFieldSH5" disable="true" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                          <TextField fx:id="textFieldSH6" disable="true" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                                          <TextField fx:id="textFieldPH1" GridPane.rowIndex="3" />
+                                          <TextField fx:id="textFieldPH2" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <TextField fx:id="textFieldPH3" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                          <TextField fx:id="textFieldPH4" disable="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                          <TextField fx:id="textFieldPH5" disable="true" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                                          <TextField fx:id="textFieldPH6" disable="true" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                                          <TextField fx:id="textFieldWD1" GridPane.rowIndex="4" />
+                                          <TextField fx:id="textFieldWD2" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <TextField fx:id="textFieldWD3" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                          <TextField fx:id="textFieldWD4" disable="true" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                          <TextField fx:id="textFieldWD5" disable="true" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                                          <TextField fx:id="textFieldWD6" disable="true" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+                                          <TextField fx:id="textFieldWV1" GridPane.rowIndex="5" />
+                                          <TextField fx:id="textFieldWV2" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <TextField fx:id="textFieldWV3" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                                          <TextField fx:id="textFieldWV4" disable="true" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                          <TextField fx:id="textFieldWV5" disable="true" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                                          <TextField fx:id="textFieldWV6" disable="true" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+                                          <TextField fx:id="textFieldAT" GridPane.rowIndex="6" />
+                                          <TextField fx:id="textFieldRH" GridPane.rowIndex="7" />
+                                       </children>
+                                    </GridPane>
+                                 </content>
+                                 <padding>
+                                    <Insets left="4.0" />
+                                 </padding>
+                              </ScrollPane>
+                           </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER" fillHeight="false">
+                           <children>
+                              <Label text="Optional Notes">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label text="Time: " />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="textFieldTime" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label fx:id="labelWingSpan" text="Wing Span (FT):" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="textFieldWingSpan" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label fx:id="labelBoomWidth" text="Boom Width (FT):" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="textFieldBoomWidth" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label fx:id="labelBoomDrop" text="Boom Drop (IN):" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="textFieldBoomDrop" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label fx:id="labelNozzleSpacing" text="Nozzle Spacing (IN):" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="textFieldNozzleSpacing" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label minWidth="-Infinity" prefWidth="75.0" text="Winglets?" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <ComboBox fx:id="comboBoxWinglets" prefWidth="100.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label minWidth="-Infinity" prefWidth="75.0" text="Notes:" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextArea fx:id="textAreaNotes" minHeight="-Infinity" prefHeight="50.0" prefWidth="150.0" />
+                           </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Button fx:id="buttonRun" alignment="CENTER" mnemonicParsing="false" onAction="#clickButtonRun" text="Save and Proceed" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                           <padding>
+                              <Insets bottom="12.0" left="6.0" right="6.0" top="12.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                  </VBox>
+               </content>
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+            </ScrollPane>
+         </left>
+         <bottom>
+            <VBox alignment="BOTTOM_LEFT" BorderPane.alignment="BOTTOM_CENTER">
+               <children>
+                  <Separator prefWidth="200.0" />
+                  <HBox BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Label text="Current File:  " />
+                        <Label fx:id="labelCurrentFile" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label text="Serial Port:  " />
+                        <Label fx:id="labelCom" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label text="Spectrometer:  " />
+                        <Label fx:id="labelSpectrometer" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label fx:id="labelScannerName" text=" No Scanner Connected " />
+                     </children>
+                     <padding>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </VBox>
+         </bottom>
+         <center>
+            <TabPane fx:id="tabPaneMain" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+              <tabs>
+                  <Tab text="Individual Passes">
+                     <content>
+                        <VBox>
+                           <children>
+                              <HBox>
+                                 <children>
+                                    <AreaChart fx:id="areaChartPass" HBox.hgrow="ALWAYS">
+                                       <padding>
+                                          <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                       </padding>
+                                       <xAxis>
+                                          <NumberAxis fx:id="numberAxisPassX" autoRanging="false" label="Location" lowerBound="-75.0" side="BOTTOM" upperBound="75.0" />
+                                       </xAxis>
+                                       <yAxis>
+                                          <NumberAxis fx:id="numberAxisPassY" side="LEFT" />
+                                       </yAxis>
+                                    </AreaChart>
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="10.0" layoutY="10.0">
+                                 <children>
+                                    <AreaChart fx:id="areaChartPassTrim" HBox.hgrow="ALWAYS">
+                                       <padding>
+                                          <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                       </padding>
+                                       <xAxis>
+                                          <NumberAxis fx:id="numberAxisPassTrimX" autoRanging="false" label="Location" lowerBound="-75.0" side="BOTTOM" upperBound="75.0" />
+                                       </xAxis>
+                                       <yAxis>
+                                          <NumberAxis fx:id="numberAxisPassTrimY" side="LEFT" />
+                                       </yAxis>
+                                    </AreaChart>
+                                    <Slider fx:id="sliderVerticalTrim" max="65000.0" onMouseReleased="#updateTrim" orientation="VERTICAL" value="65000.0" />
+                                 </children>
+                              </HBox>
+                              <Separator prefWidth="200.0" />
+                              <HBox fx:id="hBoxDrivePass11" style="-fx-background-color: #D3D3D3;">
+                                 <children>
+                                    <Button fx:id="buttonManualReverse" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#clickButtonManualReverse" wrapText="true">
+                                       <graphic>
+                                          <VBox>
+                                             <children>
+                                                <Label text="Manual Reverse" />
+                                                <HBox>
+                                                   <children>
+                                                      <Region HBox.hgrow="ALWAYS" />
+                                                      <Label fx:id="labelManualReverse" text="Start">
+                                                         <font>
+                                                            <Font name="System Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Region HBox.hgrow="ALWAYS" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </graphic>
+                                       <HBox.margin>
+                                          <Insets top="4.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button fx:id="buttonManualAdvance" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#clickButtonManualAdvance" wrapText="true">
+                                       <graphic>
+                                          <VBox>
+                                             <children>
+                                                <Label text="Manual Advance" />
+                                                <HBox>
+                                                   <children>
+                                                      <Region HBox.hgrow="ALWAYS" />
+                                                      <Label fx:id="labelManualAdvance" text="Start">
+                                                         <font>
+                                                            <Font name="System Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Region HBox.hgrow="ALWAYS" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </graphic>
+                                       <HBox.margin>
+                                          <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <VBox layoutX="380.0" layoutY="10.0">
+                                       <children>
+                                          <Label text="Cards on Pass #:" />
+                                          <Spinner fx:id="spinnerCardPassNum" onMouseReleased="#updateTrim" prefWidth="100.0">
+                                             <styleClass>
+                                                <String fx:value="split-arrows-horizontal" />
+                                             </styleClass>
+                                          </Spinner>
+                                       </children>
+                                    </VBox>
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <VBox BorderPane.alignment="CENTER">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <children>
+                                          <Label text="L Trim" />
+                                          <Spinner fx:id="spinnerTrimL" onMouseReleased="#updateTrim" prefWidth="70.0">
+                                             <styleClass>
+                                                <String fx:value="split-arrows-horizontal" />
+                                             </styleClass>
+                                          </Spinner>
+                                       </children>
+                                    </VBox>
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <VBox layoutX="432.0" layoutY="10.0">
+                                       <children>
+                                          <Label text="R Trim" />
+                                          <Spinner fx:id="spinnerTrimR" onMouseReleased="#updateTrim" prefWidth="70.0" >
+                                             <styleClass>
+                                                <String fx:value="split-arrows-horizontal" />
+                                             </styleClass>
+                                          </Spinner>
+                                       </children>
+                                    </VBox>
+                                    <Region layoutX="482.0" layoutY="10.0" HBox.hgrow="ALWAYS" />
+                                    <VBox>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <children>
+                                          <Label text="Pass #:">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font></Label>
+                                          <Spinner fx:id="spinnerPassNum" onMouseClicked="#updatePass" prefWidth="100.0">
+                                             <styleClass>
+                                                <String fx:value="split-arrows-horizontal" />
+                                             </styleClass>
+                                          </Spinner>
+                                       </children>
+                                    </VBox>
+                                    <Region layoutX="520.0" layoutY="10.0" HBox.hgrow="ALWAYS" />
+                                    <Button fx:id="buttonPassStart" mnemonicParsing="false" onAction="#clickButtonPassStart" style="-fx-background-color: #009900;" text="Start" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button fx:id="buttonPassStop" mnemonicParsing="false" onAction="#clickButtonPassStop" style="-fx-background-color: #FF0000;" text="Stop" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </content>
+                  </Tab>
+                <Tab text="Average">
+                     <content>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="52.0" prefWidth="161.0" text="Series Overlay">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Label>
+                              <LineChart fx:id="lineChartSeriesOverlay" animated="false" legendSide="RIGHT">
+                                <xAxis>
+                                  <NumberAxis fx:id="numberAxisSeriesOverlayx" label="Location" lowerBound="-75.0" side="BOTTOM" upperBound="75.0" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis fx:id="numberAxisSeriesOverlayy" side="LEFT" />
+                                </yAxis>
+                              </LineChart>
+                              <Label text="Average">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Label>
+                              <AreaChart fx:id="areaChartSeriesAverage" animated="false" legendSide="RIGHT" legendVisible="false" HBox.hgrow="ALWAYS">
+                                <xAxis>
+                                  <NumberAxis fx:id="numberAxisSeriesAveragex" label="Location" lowerBound="-75.0" side="BOTTOM" upperBound="75.0" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis fx:id="numberAxisSeriesAveragey" side="LEFT" />
+                                </yAxis>
+                              </AreaChart>
+                              <Separator prefWidth="200.0" />
+                              <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: D3D3D3;">
+                                 <children>
+                                    <ToggleButton fx:id="toggleButtonAlignCentroid" mnemonicParsing="false" onAction="#clickToggleButtonAlignCentroid" selected="true" text="Align Centroid: ON">
+                                       <HBox.margin>
+                                          <Insets right="2.0" />
+                                       </HBox.margin></ToggleButton>
+                                    <ToggleButton fx:id="toggleButtonSmoothSeries" layoutX="10.0" layoutY="12.0" mnemonicParsing="false" onAction="#clickToggleButtonSmoothSeries" selected="true" text="Smooth Series: ON">
+                                       <HBox.margin>
+                                          <Insets left="2.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <ToggleButton fx:id="toggleButtonPass1" mnemonicParsing="false" onAction="#clickToggleButtonPass1" text="Pass 1">
+                                       <HBox.margin>
+                                          <Insets left="4.0" right="4.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="toggleButtonPass2" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickToggleButtonPass2" text="Pass 2">
+                                       <HBox.margin>
+                                          <Insets left="4.0" right="4.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="toggleButtonPass3" layoutX="99.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickToggleButtonPass3" text="Pass 3">
+                                       <HBox.margin>
+                                          <Insets left="4.0" right="4.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="toggleButtonPass4" layoutX="326.0" layoutY="12.0" mnemonicParsing="false" onAction="#clickToggleButtonPass4" text="Pass 4">
+                                       <HBox.margin>
+                                          <Insets left="4.0" right="4.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="toggleButtonPass5" layoutX="357.0" layoutY="12.0" mnemonicParsing="false" onAction="#clickToggleButtonPass5" text="Pass 5">
+                                       <HBox.margin>
+                                          <Insets left="4.0" right="4.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="toggleButtonPass6" layoutX="515.0" layoutY="12.0" mnemonicParsing="false" onAction="#clickToggleButtonPass6" text="Pass 6">
+                                       <HBox.margin>
+                                          <Insets left="4.0" right="4.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
+                                    <Region layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS" />
+                                    <ToggleButton fx:id="toggleButtonSmoothAverage" layoutX="10.0" layoutY="12.0" mnemonicParsing="false" onAction="#clickToggleButtonSmoothAverage" selected="true" text="Smooth Average: ON">
+                                       <HBox.margin>
+                                          <Insets right="2.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="toggleButtonEqualizeArea" mnemonicParsing="false" onAction="#clickToggleButtonEqualizeArea" selected="true" text="Equalize Area: ON">
+                                       <HBox.margin>
+                                          <Insets left="2.0" />
+                                       </HBox.margin></ToggleButton>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="2.0" top="2.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </content>
+                </Tab>
+                  <Tab text="Swath Analysis">
+                     <content>
+                        <VBox>
+                           <children>
+                              <HBox>
+                                 <children>
+                                    <VBox alignment="CENTER" HBox.hgrow="ALWAYS" StackPane.alignment="CENTER_RIGHT">
+                                       <children>
+                                          <Label text="Racetrack">
+                                             <font>
+                                                <Font size="22.0" />
+                                             </font>
+                                          </Label>
+                                          <StackedAreaChart fx:id="areaChartRacetrack" animated="false">
+                                            <xAxis>
+                                              <NumberAxis fx:id="numberAxisRacetrackx" lowerBound="-75.0" side="BOTTOM" upperBound="75.0" />
+                                            </xAxis>
+                                            <yAxis>
+                                              <NumberAxis fx:id="numberAxisRacetracky" side="LEFT" />
+                                            </yAxis>
+                                          </StackedAreaChart>
+                                          <Label text="Back and Forth">
+                                             <font>
+                                                <Font size="22.0" />
+                                             </font>
+                                          </Label>
+                                          <StackedAreaChart fx:id="areaChartBackAndForth" animated="false">
+                                            <xAxis>
+                                              <NumberAxis fx:id="numberAxisBackAndForthx" lowerBound="-75.0" side="BOTTOM" upperBound="75.0" />
+                                            </xAxis>
+                                            <yAxis>
+                                              <NumberAxis fx:id="numberAxisBackAndForthy" side="LEFT" />
+                                            </yAxis>
+                                          </StackedAreaChart>
+                                       </children>
+                                       <StackPane.margin>
+                                          <Insets />
+                                       </StackPane.margin>
+                                       <padding>
+                                          <Insets right="8.0" />
+                                       </padding>
+                                    </VBox>
+                                    <VBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="130.0" HBox.hgrow="ALWAYS" StackPane.alignment="CENTER_RIGHT">
+                                       <children>
+                                          <Region VBox.vgrow="ALWAYS" />
+                                          <GridPane fx:id="gridPaneRacetrack" alignment="CENTER_RIGHT" gridLinesVisible="true">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="40.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="40.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label fx:id="labelSwathUnitsR" text="FT" GridPane.halignment="CENTER" />
+                                                <Label text="CV" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                                <Label fx:id="rt01" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                                <Label fx:id="rt11" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                                <Label fx:id="rt02" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                <Label fx:id="rt12" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                <Label fx:id="rt03" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                                <Label fx:id="rt13" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                                <Label fx:id="rt04" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                                <Label fx:id="rt14" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                                <Label fx:id="rt05" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                                <Label fx:id="rt15" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                                <Label fx:id="rt06" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                                                <Label fx:id="rt16" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                                                <Label fx:id="rt07" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                                                <Label fx:id="rt17" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                                                <Label fx:id="rt08" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                                                <Label fx:id="rt18" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                                                <Label fx:id="rt09" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+                                                <Label fx:id="rt19" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+                                                <Label fx:id="rt010" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                                                <Label fx:id="rt110" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                                                <Label fx:id="rt011" GridPane.halignment="CENTER" GridPane.rowIndex="11" />
+                                                <Label fx:id="rt111" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="11" />
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </padding>
+                                             <VBox.margin>
+                                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                             </VBox.margin>
+                                          </GridPane>
+                                          <Region VBox.vgrow="ALWAYS" />
+                                          <Button fx:id="buttonSwathINC" mnemonicParsing="false" onAction="#clickButtonSwathINC" text=" + " />
+                                          <HBox alignment="CENTER" nodeOrientation="RIGHT_TO_LEFT" spacing="2.0">
+                                             <children>
+                                                <Label fx:id="labelSwathUnits" layoutX="91.0" layoutY="10.0" HBox.hgrow="ALWAYS" />
+                                                <Label fx:id="labelSwathFinal" prefWidth="35.0" HBox.hgrow="ALWAYS" />
+                                             </children>
+                                          </HBox>
+                                          <Button fx:id="buttonSwathDEC" mnemonicParsing="false" onAction="#clickButtonSwathDEC" text=" - " />
+                                          <Region VBox.vgrow="ALWAYS" />
+                                          <GridPane fx:id="gridPaneBackAndForth" alignment="CENTER_RIGHT" gridLinesVisible="true" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <Label fx:id="labelSwathUnitsBF" text="FT" GridPane.halignment="CENTER" />
+                                                <Label text="CV" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                                <Label fx:id="bf01" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                                <Label fx:id="bf11" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                                <Label fx:id="bf02" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                <Label fx:id="bf12" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                <Label fx:id="bf03" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                                <Label fx:id="bf13" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                                <Label fx:id="bf04" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                                <Label fx:id="bf14" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                                <Label fx:id="bf05" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                                <Label fx:id="bf15" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                                <Label fx:id="bf06" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                                                <Label fx:id="bf16" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                                                <Label fx:id="bf07" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                                                <Label fx:id="bf17" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                                                <Label fx:id="bf08" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                                                <Label fx:id="bf18" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                                                <Label fx:id="bf09" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+                                                <Label fx:id="bf19" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+                                                <Label fx:id="bf010" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                                                <Label fx:id="bf110" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                                                <Label fx:id="bf011" GridPane.halignment="CENTER" GridPane.rowIndex="11" />
+                                                <Label fx:id="bf111" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="11" />
+                                             </children>
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="40.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="40.0" />
+                                             </columnConstraints>
+                                             <padding>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </padding>
+                                             <rowConstraints>
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="ALWAYS" />
+                                             </rowConstraints>
+                                             <VBox.margin>
+                                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                             </VBox.margin>
+                                          </GridPane>
+                                          <Region VBox.vgrow="ALWAYS" />
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="4.0" left="4.0" right="10.0" top="4.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <Separator prefWidth="200.0" />
+                              <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: D3D3D3;">
+                                 <children>
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <ToggleButton fx:id="toggleButtonL2" mnemonicParsing="false" onAction="#clickToggleButtonLR2" selected="true" text="L2">
+                                       <HBox.margin>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="toggleButtonL1" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickToggleButtonLR1" selected="true" text="L1">
+                                       <HBox.margin>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
+                                    <Label text="Center">
+                                       <HBox.margin>
+                                          <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <ToggleButton fx:id="toggleButtonR1" layoutX="196.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickToggleButtonLR1" selected="true" text="R1">
+                                       <HBox.margin>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="toggleButtonR2" layoutX="289.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickToggleButtonLR2" selected="true" text="R2">
+                                       <HBox.margin>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </HBox.margin>
+                                    </ToggleButton>
+                                    <Region layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="tabScan" text="Scan">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ScrollPane fx:id="scrollPaneScan" pannable="true" VBox.vgrow="ALWAYS">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0">
+                                             <children>
+                                                <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <HBox VBox.vgrow="ALWAYS">
+                                                         <children>
+                                                            <VBox fx:id="vBoxCard0" alignment="TOP_CENTER" prefWidth="170.0">
+                                                               <children>
+                                                                  <Label fx:id="labelCard0">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <ImageView fx:id="imageViewCard0" fitHeight="450.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                                                                  <Label fx:id="labelVMD0" />
+                                                                  <Label fx:id="labelDrops0" layoutX="110.0" layoutY="427.0" />
+                                                                  <Label fx:id="labelCoverage0" />
+                                                                  <HBox fx:id="hBoxCard0T" alignment="CENTER" spacing="4.0">
+                                                                     <children>
+                                                                        <Button mnemonicParsing="false" onAction="#clickButton0TMinus" text="-" />
+                                                                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickButton0TPlus" text="+" />
+                                                                     </children>
+                                                                     <padding>
+                                                                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                                     </padding>
+                                                                  </HBox>
+                                                                  <Label fx:id="labelCard0T" layoutX="110.0" layoutY="461.0" />
+                                                                  <ImageView fx:id="imageViewCard0T" fitHeight="450.0" fitWidth="150.0" layoutX="10.0" layoutY="27.0" onMouseClicked="#clickCard0" pickOnBounds="true" preserveRatio="true" />
+                                                               </children>
+                                                               <HBox.margin>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </HBox.margin>
+                                                               <padding>
+                                                                  <Insets bottom="10.0" />
+                                                               </padding>
+                                                            </VBox>
+                                                            <VBox fx:id="vBoxCard1" alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefWidth="170.0">
+                                                               <children>
+                                                                  <Label fx:id="labelCard1">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <ImageView fx:id="imageViewCard1" fitHeight="450.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                                                                  <Label fx:id="labelVMD1" />
+                                                                  <Label fx:id="labelDrops1" />
+                                                                  <Label fx:id="labelCoverage1" />
+                                                                  <HBox fx:id="hBoxCard1T" alignment="CENTER" spacing="4.0">
+                                                                     <children>
+                                                                        <Button mnemonicParsing="false" onAction="#clickButton1TMinus" text="-" />
+                                                                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickButton1TPlus" text="+" />
+                                                                     </children>
+                                                                     <padding>
+                                                                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                                     </padding>
+                                                                  </HBox>
+                                                                  <Label fx:id="labelCard1T" layoutX="110.0" layoutY="461.0" />
+                                                                  <ImageView fx:id="imageViewCard1T" fitHeight="450.0" fitWidth="150.0" layoutX="10.0" layoutY="27.0" onMouseClicked="#clickCard1" pickOnBounds="true" preserveRatio="true" />
+                                                               </children>
+                                                               <HBox.margin>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </HBox.margin>
+                                                               <padding>
+                                                                  <Insets bottom="10.0" />
+                                                               </padding>
+                                                            </VBox>
+                                                            <VBox fx:id="vBoxCard2" alignment="TOP_CENTER" layoutX="210.0" layoutY="10.0" prefWidth="170.0">
+                                                               <children>
+                                                                  <Label fx:id="labelCard2">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <ImageView fx:id="imageViewCard2" fitHeight="450.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                                                                  <Label fx:id="labelVMD2" />
+                                                                  <Label fx:id="labelDrops2" />
+                                                                  <Label fx:id="labelCoverage2" />
+                                                                  <HBox fx:id="hBoxCard2T" alignment="CENTER" spacing="4.0">
+                                                                     <children>
+                                                                        <Button mnemonicParsing="false" onAction="#clickButton2TMinus" text="-" />
+                                                                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickButton2TPlus" text="+" />
+                                                                     </children>
+                                                                     <padding>
+                                                                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                                     </padding>
+                                                                  </HBox>
+                                                                  <Label fx:id="labelCard2T" layoutX="110.0" layoutY="461.0" />
+                                                                  <ImageView fx:id="imageViewCard2T" fitHeight="450.0" fitWidth="150.0" layoutX="10.0" layoutY="27.0" onMouseClicked="#clickCard2" pickOnBounds="true" preserveRatio="true" />
+                                                               </children>
+                                                               <HBox.margin>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </HBox.margin>
+                                                               <padding>
+                                                                  <Insets bottom="10.0" />
+                                                               </padding>
+                                                            </VBox>
+                                                            <VBox fx:id="vBoxCard3" alignment="TOP_CENTER" layoutX="410.0" layoutY="10.0" prefWidth="170.0">
+                                                               <children>
+                                                                  <Label fx:id="labelCard3">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <ImageView fx:id="imageViewCard3" fitHeight="450.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                                                                  <Label fx:id="labelVMD3" />
+                                                                  <Label fx:id="labelDrops3" />
+                                                                  <Label fx:id="labelCoverage3" />
+                                                                  <HBox fx:id="hBoxCard3T" alignment="CENTER" spacing="4.0">
+                                                                     <children>
+                                                                        <Button mnemonicParsing="false" onAction="#clickButton3TMinus" text="-" />
+                                                                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickButton3TPlus" text="+" />
+                                                                     </children>
+                                                                     <padding>
+                                                                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                                     </padding>
+                                                                  </HBox>
+                                                                  <Label fx:id="labelCard3T" layoutX="110.0" layoutY="461.0" />
+                                                                  <ImageView fx:id="imageViewCard3T" fitHeight="450.0" fitWidth="150.0" layoutX="10.0" layoutY="27.0" onMouseClicked="#clickCard3" pickOnBounds="true" preserveRatio="true" />
+                                                               </children>
+                                                               <HBox.margin>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </HBox.margin>
+                                                               <padding>
+                                                                  <Insets bottom="10.0" />
+                                                               </padding>
+                                                            </VBox>
+                                                            <VBox fx:id="vBoxCard4" alignment="TOP_CENTER" layoutX="610.0" layoutY="10.0" prefWidth="170.0">
+                                                               <children>
+                                                                  <Label fx:id="labelCard4">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <ImageView fx:id="imageViewCard4" fitHeight="450.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                                                                  <Label fx:id="labelVMD4" />
+                                                                  <Label fx:id="labelDrops4" />
+                                                                  <Label fx:id="labelCoverage4" />
+                                                                  <HBox fx:id="hBoxCard4T" alignment="CENTER" spacing="4.0">
+                                                                     <children>
+                                                                        <Button mnemonicParsing="false" onAction="#clickButton4TMinus" text="-" />
+                                                                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickButton4TPlus" text="+" />
+                                                                     </children>
+                                                                     <padding>
+                                                                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                                     </padding>
+                                                                  </HBox>
+                                                                  <Label fx:id="labelCard4T" layoutX="110.0" layoutY="461.0" />
+                                                                  <ImageView fx:id="imageViewCard4T" fitHeight="450.0" fitWidth="150.0" layoutX="10.0" layoutY="27.0" onMouseClicked="#clickCard4" pickOnBounds="true" preserveRatio="true" />
+                                                               </children>
+                                                               <HBox.margin>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </HBox.margin>
+                                                               <padding>
+                                                                  <Insets bottom="10.0" />
+                                                               </padding>
+                                                            </VBox>
+                                                            <VBox fx:id="vBoxCard5" alignment="TOP_CENTER" layoutX="846.0" layoutY="14.0" prefWidth="170.0">
+                                                               <children>
+                                                                  <Label fx:id="labelCard5">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <ImageView fx:id="imageViewCard5" fitHeight="450.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                                                                  <Label fx:id="labelVMD5" />
+                                                                  <Label fx:id="labelDrops5" />
+                                                                  <Label fx:id="labelCoverage5" />
+                                                                  <HBox fx:id="hBoxCard5T" alignment="CENTER" spacing="4.0">
+                                                                     <children>
+                                                                        <Button mnemonicParsing="false" onAction="#clickButton5TMinus" text="-" />
+                                                                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickButton5TPlus" text="+" />
+                                                                     </children>
+                                                                     <padding>
+                                                                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                                     </padding>
+                                                                  </HBox>
+                                                                  <Label fx:id="labelCard5T" layoutX="110.0" layoutY="461.0" />
+                                                                  <ImageView fx:id="imageViewCard5T" fitHeight="450.0" fitWidth="150.0" layoutX="10.0" layoutY="27.0" onMouseClicked="#clickCard5" pickOnBounds="true" preserveRatio="true" />
+                                                               </children>
+                                                               <HBox.margin>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </HBox.margin>
+                                                               <padding>
+                                                                  <Insets bottom="10.0" />
+                                                               </padding>
+                                                            </VBox>
+                                                            <VBox fx:id="vBoxCard6" alignment="TOP_CENTER" layoutX="1050.0" layoutY="10.0" prefWidth="170.0">
+                                                               <children>
+                                                                  <Label fx:id="labelCard6">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <ImageView fx:id="imageViewCard6" fitHeight="450.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                                                                  <Label fx:id="labelVMD6" />
+                                                                  <Label fx:id="labelDrops6" />
+                                                                  <Label fx:id="labelCoverage6" />
+                                                                  <HBox fx:id="hBoxCard6T" alignment="CENTER" spacing="4.0">
+                                                                     <children>
+                                                                        <Button mnemonicParsing="false" onAction="#clickButton6TMinus" text="-" />
+                                                                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickButton6TPlus" text="+" />
+                                                                     </children>
+                                                                     <padding>
+                                                                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                                     </padding>
+                                                                  </HBox>
+                                                                  <Label fx:id="labelCard6T" layoutX="110.0" layoutY="461.0" />
+                                                                  <ImageView fx:id="imageViewCard6T" fitHeight="450.0" fitWidth="150.0" layoutX="10.0" layoutY="27.0" onMouseClicked="#clickCard6" pickOnBounds="true" preserveRatio="true" />
+                                                               </children>
+                                                               <HBox.margin>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </HBox.margin>
+                                                               <padding>
+                                                                  <Insets bottom="10.0" />
+                                                               </padding>
+                                                            </VBox>
+                                                            <VBox fx:id="vBoxCard7" alignment="TOP_CENTER" layoutX="1250.0" layoutY="10.0" prefWidth="170.0">
+                                                               <children>
+                                                                  <Label fx:id="labelCard7">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <ImageView fx:id="imageViewCard7" fitHeight="450.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                                                                  <Label fx:id="labelVMD7" />
+                                                                  <Label fx:id="labelDrops7" />
+                                                                  <Label fx:id="labelCoverage7" />
+                                                                  <HBox fx:id="hBoxCard7T" alignment="CENTER" spacing="4.0">
+                                                                     <children>
+                                                                        <Button mnemonicParsing="false" onAction="#clickButton7TMinus" text="-" />
+                                                                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickButton7TPlus" text="+" />
+                                                                     </children>
+                                                                     <padding>
+                                                                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                                     </padding>
+                                                                  </HBox>
+                                                                  <Label fx:id="labelCard7T" layoutX="110.0" layoutY="461.0" />
+                                                                  <ImageView fx:id="imageViewCard7T" fitHeight="450.0" fitWidth="150.0" layoutX="10.0" layoutY="27.0" onMouseClicked="#clickCard7" pickOnBounds="true" preserveRatio="true" />
+                                                               </children>
+                                                               <HBox.margin>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </HBox.margin>
+                                                               <padding>
+                                                                  <Insets bottom="10.0" />
+                                                               </padding>
+                                                            </VBox>
+                                                            <VBox fx:id="vBoxCard8" alignment="TOP_CENTER" layoutX="1450.0" layoutY="10.0" prefWidth="170.0">
+                                                               <children>
+                                                                  <Label fx:id="labelCard8">
+                                                                     <font>
+                                                                        <Font name="System Bold" size="16.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <ImageView fx:id="imageViewCard8" fitHeight="450.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                                                                  <Label fx:id="labelVMD8" />
+                                                                  <Label fx:id="labelDrops8" />
+                                                                  <Label fx:id="labelCoverage8" />
+                                                                  <HBox fx:id="hBoxCard8T" alignment="CENTER" spacing="4.0">
+                                                                     <children>
+                                                                        <Button mnemonicParsing="false" onAction="#clickButton8TMinus" text="-" />
+                                                                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickButton8TPlus" text="+" />
+                                                                     </children>
+                                                                     <padding>
+                                                                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                                     </padding>
+                                                                  </HBox>
+                                                                  <Label fx:id="labelCard8T" layoutX="110.0" layoutY="461.0" />
+                                                                  <ImageView fx:id="imageViewCard8T" fitHeight="450.0" fitWidth="150.0" layoutX="10.0" layoutY="27.0" onMouseClicked="#clickCard8" pickOnBounds="true" preserveRatio="true" />
+                                                               </children>
+                                                               <HBox.margin>
+                                                                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                               </HBox.margin>
+                                                               <padding>
+                                                                  <Insets bottom="10.0" />
+                                                               </padding>
+                                                            </VBox>
+                                                         </children>
+                                                         <padding>
+                                                            <Insets bottom="5.0" />
+                                                         </padding>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </AnchorPane>
+                                       </content>
+                                    </ScrollPane>
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #b5b5b5;">
+                                       <children>
+                                          <HBox style="-fx-background-color: #d6d6d6;">
+                                             <children>
+                                                <VBox alignment="CENTER_LEFT" layoutX="12.0" layoutY="10.0" style="-fx-background-color: #b5b5b5;">
+                                                   <children>
+                                                      <Label alignment="CENTER" style="-fx-background-color: #b5b5b5;" text="Composite:">
+                                                         <font>
+                                                            <Font size="24.0" />
+                                                         </font>
+                                                         <padding>
+                                                            <Insets bottom="2.0" left="8.0" right="8.0" top="2.0" />
+                                                         </padding>
+                                                      </Label>
+                                                   </children>
+                                                </VBox>
+                                                <Region prefWidth="2.0" style="-fx-background-color: #b5b5b5;" />
+                                                <VBox alignment="TOP_CENTER">
+                                                   <children>
+                                                      <Label style="-fx-background-color: #b5b5b5;" text="Coverage">
+                                                         <font>
+                                                            <Font size="18.0" />
+                                                         </font>
+                                                         <padding>
+                                                            <Insets bottom="2.0" left="8.0" right="8.0" top="2.0" />
+                                                         </padding>
+                                                      </Label>
+                                                      <Label fx:id="labelCCov" layoutX="10.0" layoutY="10.0">
+                                                         <font>
+                                                            <Font size="14.0" />
+                                                         </font>
+                                                         <padding>
+                                                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                         </padding>
+                                                      </Label>
+                                                   </children>
+                                                </VBox>
+                                                <Region layoutX="10.0" layoutY="10.0" prefWidth="2.0" style="-fx-background-color: #b5b5b5;" />
+                                                <VBox alignment="TOP_CENTER" layoutX="12.0" layoutY="10.0">
+                                                   <children>
+                                                      <Label style="-fx-background-color: #b5b5b5;" text="VMD">
+                                                         <font>
+                                                            <Font size="18.0" />
+                                                         </font>
+                                                         <padding>
+                                                            <Insets bottom="2.0" left="16.0" right="16.0" top="2.0" />
+                                                         </padding>
+                                                      </Label>
+                                                      <Label fx:id="labelCVMD" layoutX="10.0" layoutY="10.0">
+                                                         <font>
+                                                            <Font size="14.0" />
+                                                         </font>
+                                                         <padding>
+                                                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                         </padding>
+                                                      </Label>
+                                                   </children>
+                                                </VBox>
+                                                <Region layoutX="110.0" layoutY="10.0" prefWidth="2.0" style="-fx-background-color: #b5b5b5;" />
+                                                <VBox alignment="TOP_CENTER" layoutX="112.0" layoutY="10.0">
+                                                   <children>
+                                                      <Label style="-fx-background-color: #b5b5b5;" text="DV0.1">
+                                                         <font>
+                                                            <Font size="18.0" />
+                                                         </font>
+                                                         <padding>
+                                                            <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
+                                                         </padding>
+                                                      </Label>
+                                                      <Label fx:id="labelCDV01" layoutX="10.0" layoutY="10.0">
+                                                         <font>
+                                                            <Font size="14.0" />
+                                                         </font>
+                                                         <padding>
+                                                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                         </padding>
+                                                      </Label>
+                                                   </children>
+                                                </VBox>
+                                                <Region layoutX="185.0" layoutY="10.0" prefWidth="2.0" style="-fx-background-color: #b5b5b5;" />
+                                                <VBox alignment="TOP_CENTER" layoutX="187.0" layoutY="10.0">
+                                                   <children>
+                                                      <Label style="-fx-background-color: #b5b5b5;" text="DV0.9">
+                                                         <font>
+                                                            <Font size="18.0" />
+                                                         </font>
+                                                         <padding>
+                                                            <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
+                                                         </padding>
+                                                      </Label>
+                                                      <Label fx:id="labelCDV09" layoutX="10.0" layoutY="10.0">
+                                                         <font>
+                                                            <Font size="14.0" />
+                                                         </font>
+                                                         <padding>
+                                                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                         </padding>
+                                                      </Label>
+                                                   </children>
+                                                </VBox>
+                                                <Region layoutX="258.0" layoutY="10.0" prefWidth="2.0" style="-fx-background-color: #b5b5b5;" />
+                                                <VBox alignment="TOP_CENTER" layoutX="260.0" layoutY="10.0">
+                                                   <children>
+                                                      <Label style="-fx-background-color: #b5b5b5;" text="RS">
+                                                         <font>
+                                                            <Font size="18.0" />
+                                                         </font>
+                                                         <padding>
+                                                            <Insets bottom="2.0" left="16.0" right="16.0" top="2.0" />
+                                                         </padding>
+                                                      </Label>
+                                                      <Label fx:id="labelCRS" layoutX="10.0" layoutY="10.0">
+                                                         <font>
+                                                            <Font size="14.0" />
+                                                         </font>
+                                                         <padding>
+                                                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                         </padding>
+                                                      </Label>
+                                                   </children>
+                                                </VBox>
+                                                <Region layoutX="334.0" layoutY="10.0" prefWidth="2.0" style="-fx-background-color: #b5b5b5;" />
+                                                <VBox alignment="TOP_CENTER" layoutX="336.0" layoutY="10.0">
+                                                   <children>
+                                                      <Label style="-fx-background-color: #b5b5b5;" text="DSC">
+                                                         <font>
+                                                            <Font size="18.0" />
+                                                         </font>
+                                                         <padding>
+                                                            <Insets bottom="2.0" left="16.0" right="16.0" top="2.0" />
+                                                         </padding>
+                                                      </Label>
+                                                      <Label fx:id="labelCDSC" layoutX="10.0" layoutY="10.0">
+                                                         <font>
+                                                            <Font size="14.0" />
+                                                         </font>
+                                                         <padding>
+                                                            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                         </padding>
+                                                      </Label>
+                                                   </children>
+                                                </VBox>
+                                                <Region layoutX="10.0" layoutY="10.0" prefWidth="2.0" style="-fx-background-color: #b5b5b5;" />
+                                             </children>
+                                          </HBox>
+                                          <Region style="-fx-background-color: #b5b5b5;" HBox.hgrow="ALWAYS" />
+                                          <Label text="   Click below to " />
+                                          <Label style="-fx-background-color: #328432; -fx-background-radius: 4,4,4;" text=" INCLUDE " textFill="WHITE" />
+                                          <Label layoutX="151.0" layoutY="10.0" text=" or " />
+                                          <Label layoutX="185.0" layoutY="10.0" style="-fx-background-color: #e9967a; -fx-background-radius: 4,4,4;" text=" EXCLUDE " />
+                                          <Label layoutX="208.0" layoutY="10.0" text=" from analysis  " />
+                                       </children>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <padding>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </padding>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" style="-fx-background-color: #b5b5b5;">
+                                       <children>
+                                          <Button fx:id="buttonPreview" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#clickButtonPreview" prefHeight="50.0" style="-fx-background-color: #5b5b5b;" text="Step 1: Preview Scan" textFill="WHITE">
+                                             <HBox.margin>
+                                                <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Button>
+                                          <Button fx:id="buttonFullScan" layoutX="69.0" layoutY="10.0" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#clickButtonFullScan" prefHeight="50.0" style="-fx-background-color: #5b5b5b;" text="Step 2: Full Scan" textFill="WHITE">
+                                             <HBox.margin>
+                                                <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Button>
+                                          <ProgressBar fx:id="progressBarScan" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="50.0" progress="0.0" style="-fx-background-radius: 4,4,4;" HBox.hgrow="ALWAYS">
+                                             <HBox.margin>
+                                                <Insets bottom="4.0" left="8.0" right="8.0" top="4.0" />
+                                             </HBox.margin>
+                                          </ProgressBar>
+                                          <ToggleButton fx:id="togL32" mnemonicParsing="false" onAction="#clickCardToggle" selected="true" text="L32">
+                                             <HBox.margin>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </HBox.margin>
+                                          </ToggleButton>
+                                          <ToggleButton fx:id="togL24" layoutX="456.0" layoutY="14.0" mnemonicParsing="false" onAction="#clickCardToggle" selected="true" text="L24">
+                                             <HBox.margin>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </HBox.margin>
+                                          </ToggleButton>
+                                          <ToggleButton fx:id="togL16" layoutX="456.0" layoutY="14.0" mnemonicParsing="false" onAction="#clickCardToggle" selected="true" text="L16">
+                                             <HBox.margin>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </HBox.margin>
+                                          </ToggleButton>
+                                          <ToggleButton fx:id="togL8" layoutX="530.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickCardToggle" selected="true" text="L8">
+                                             <HBox.margin>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </HBox.margin>
+                                          </ToggleButton>
+                                          <ToggleButton fx:id="tog0" layoutX="565.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickCardToggle" selected="true" text="00">
+                                             <HBox.margin>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </HBox.margin>
+                                          </ToggleButton>
+                                          <ToggleButton fx:id="togR8" layoutX="565.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickCardToggle" selected="true" text="R8">
+                                             <HBox.margin>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </HBox.margin>
+                                          </ToggleButton>
+                                          <ToggleButton fx:id="togR16" layoutX="600.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickCardToggle" selected="true" text="R16">
+                                             <HBox.margin>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </HBox.margin>
+                                          </ToggleButton>
+                                          <ToggleButton fx:id="togR24" layoutX="635.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickCardToggle" selected="true" text="R24">
+                                             <HBox.margin>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </HBox.margin>
+                                          </ToggleButton>
+                                          <ToggleButton fx:id="togR32" layoutX="705.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickCardToggle" selected="true" text="R32">
+                                             <HBox.margin>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </HBox.margin>
+                                          </ToggleButton>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="tabDroplets" text="Droplets">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <padding>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                 </padding>
+                                 <children>
+                                    <AreaChart fx:id="areaChartCoverage">
+                                       <xAxis>
+                                          <NumberAxis autoRanging="false" label="Location (feet)" side="BOTTOM">
+                                             <tickLabelFont>
+                                                <Font size="12.0" />
+                                             </tickLabelFont></NumberAxis>
+                                       </xAxis>
+                                       <yAxis>
+                                          <NumberAxis label="Percent Coverage" side="LEFT" />
+                                       </yAxis>
+                                    </AreaChart>
+                                    <BarChart fx:id="barChartDropletVolume">
+                                       <xAxis>
+                                          <CategoryAxis label="Droplet Diameter (microns)" side="BOTTOM" />
+                                       </xAxis>
+                                       <yAxis>
+                                          <NumberAxis label="Percent Volume" side="LEFT">
+                                             <tickLabelFont>
+                                                <Font size="12.0" />
+                                             </tickLabelFont></NumberAxis>
+                                       </yAxis>
+                                    </BarChart>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
