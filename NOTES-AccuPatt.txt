@@ -1,0 +1,130 @@
+Update 20180501
+  Fixed intermittent Preview Button operation. Still hangs up, but now can re-initiate scan to try again.
+  Implemented running of a string with vertical offset
+  Changed Target Swath TF to a Label with INC/DEC buttons
+  Removed Extra Info on/off setting, now Optional Notes always visible
+  Fixed boom drop and NS units to IN/CM instead of FT/M
+  Updated Card Page to accommodate predicted and actual droplet spectrum values
+  Expanded String Page header to accommodate up to 6 passes of data
+  Fixed averaging and display of series data in header, previously excluding passes gave wrong aves
+  Target swath is saved upon report generation, used when data file re-opened
+  Dynamic colors on overlay chart converted to static, had to ditch CSS to make it work
+  Converted State ChoiceBox to Textfield, saves time overall
+  Re-arranged Applicator data entry block to better suit packet layout
+  Adjusted Series data scroll pane so that labels are static
+
+Update 20180517
+  Added DC SS Flow rates to NozzleModels.xlsx
+  Renamed for clarification "Hollow Cone Steel/Ceramic DC45"
+  NOTE: DC SS models have different deflection allowances in HS vs LS Models
+  NOTE: New educational license for Morena7 good through 20190523
+  Fixed negative %<100 possibility - if(pL100<0){pL100=0.01} - IAW USDA Models
+  Placed toggle button "smooth series on/ff" on average tab - savitsky golay 9 point smoothing
+  Placed toggle button "smooth average on/off" on average tab - replaced moving average with SG 9 point
+  Replaced "Update" and "Run" menu items with one multipurpose button at bottom of scrollpane
+  Clicking "Save and Proceed" now offers a prompt that auto selects highest com port if not already selected
+
+Update 20180604
+  Updated Report droplet data on page 1 and 2 to show "Unknown" when models have insufficient data
+  NOTE: Version 1.01+ released to Alan Corr at this point
+
+Update 20180611
+  Fixed UpdateDataFile function to match original SaveAircraftAndSeries function (originally to fix invertPH)
+  Moved logo right slightly and adjusted it to scale square (suggest 400x400 resolution), "Your Logo Here" for demo
+  Actual spread factors added to report
+  Report now shows what pass cards came from. In data file (Card Index) and Individual Passes screen
+  Added a warning in the "Save and Proceed" script which pops an error if Target Swath > Flightline Length
+  Fixed card VBoxes were staying red with new series. Added to "Clear Card Slate"
+
+Update 20180614
+  Preview of Cards now pop up every time
+  Preview shows cards with named labels (L32, L24, etc) from cardNameList
+  Revised scanner connection procedure to include alerts. Also scanner list now populates on Settings menu validation
+  Switched METRIC CV SWs to 0.5m increments
+  Now shows "N/A" for CV when SW<=0 or SW>=FL on screen and in report
+  Wingspan is actually correct in METRIC now
+
+Update 20180618
+  Settings: ROI and Threshold are sliders now to prevent inadvertent errors
+  Added Thresholded images to appear after full scan via overloaded displayCardsOnScreen function
+  NOTE NOTE NOTE: AccuPatt 1.02 Released to All
+
+Update 20181121
+  added Finder with direct opening and summary export abilities
+  added “About” popup
+  Pass Heading tf synced to PH1
+  getters/setters for currentdirectory and reportfile NEED TO TEST!!
+
+Update 20190215
+  Solved params saving issue - added full user permission to innosetup script
+  Could not replicate Corr’s issue with scanner response. Said it hangs up on second scan attempt
+  TODO - Make each images threshold adjustable in post-processing
+
+Update 20190218
+  Fixed SAFE Report - autonames SAFEReport directoryname.xlsx
+  Changed metric kPa to PSI
+  TODO - when opening from finder, make editable
+
+20190218
+  Added WRK files to Finder, ignoring Dry Files (“GD”) and early WRK (“PA”)
+  Fixed issue with Exporting Data ignoring nozzle data
+  Reworked pattern data into an object file
+
+20190401
+  Import USDA implemented with only pattern and reg/series num data
+  Import AccuPatt implemented with new methods
+  Import WRK implemented with new methods
+
+20190405
+  Updated Finder to combine SearchRequest and be persistent when opening files
+  New savitsky golay filter (adjustable internally) with order=4 and window=51
+  Added Crosshair to CV plots
+
+20190409
+  TODO: Iota series 2 smoothing messing up centroid, vert trim passes not opening correctly
+  Implemented cardObject with new adjustable thresholds by card
+
+20190411
+  Card Save/Open/Update tested to work well
+  Now using actual saved images for re-processing at later times.
+
+20190415
+  Added Legacy AccuStain Support (overwrites old card images and data)
+
+20190419
+  Added ViewCardDropletMask - Maybe just use this as default view?
+  Added “Test Spectrometer” to the settings menu (removed corElDark and scansToAvg)
+  Fixed bug where reopening accupatt wouldn’t find existing reportFile in current directory
+
+20190422
+  TODO: Include manual driver install instructions. (Tim Shamblin had issues)
+  TODO: include a reverse boost (AV-) with manual reverse
+  Default to last current directory (Tim Shamblin)
+  TODO: Settings -> Spectrometer -> List them with reload icon as with others
+
+20190507
+  Fixed Percent Coverage, updated binaries to be blue with red edge stains
+  Updated user manual to reflect changes since 1.04
+  TODO: Fix BF CV 2R
+
+20190517
+  TODO: Vertical trim for s4-s6
+  TODO: Handling scanner not responding
+  TODO: Spectrometer drift of measurements
+  TODO: Reduce Boxcar Width to 5, test, remove from settings
+  TODO: Enter data while running string
+
+20190905
+  TODO: Fix and Finish pattern flipping, add to saved settings, add to report, currently doesn’t stick if passes turned on/off, also doesn’t work when opening from finder
+
+20191024
+  TODO: Add RT and BF CVs to finder
+
+20200624
+  BUG: Corr - SAFEReport saving to last SAFEReport on first series after opening program.
+
+
+-----------------------------------------
+Notes
+-----------------------------------------
+  NOTE: (Manual) DropletScan: A=0, B=0.0009, C=1.6333 and DepositScan: A=0, B=0.91, C=0.95
